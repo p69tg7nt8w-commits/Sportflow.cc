@@ -437,18 +437,19 @@ footer p{color:var(--mu);font-size:11px;letter-spacing:0.3px;}
   <h2 class="sh">Parlons de<br>votre club.</h2>
   <p class="sp">Un appel de 30 minutes suffit. On vous montre exactement ce qu'on peut faire — gratuitement et sans engagement.</p>
   <div class="cg">
-    <div class="cf rv">
+    <form class="cf rv" action="https://formspree.io/f/xvzlybew" method="POST">
       <div class="fr">
-        <div class="fg"><label>Prenom</label><input type="text" placeholder="Jean"></div>
-        <div class="fg"><label>Nom du club</label><input type="text" placeholder="FC Exemple"></div>
+        <div class="fg"><label>Prenom</label><input type="text" name="prenom" placeholder="Jean" required></div>
+        <div class="fg"><label>Nom du club</label><input type="text" name="club" placeholder="FC Exemple" required></div>
       </div>
-      <div class="fg"><label>Email</label><input type="email" placeholder="contact@monclub.fr"></div>
+      <div class="fg"><label>Email</label><input type="email" name="_replyto" placeholder="contact@monclub.fr" required></div>
       <div class="fg"><label>Sport</label>
-        <select><option>Football</option><option>Basketball</option><option>Tennis</option><option>Handball</option><option>Autre</option></select>
+        <select name="sport"><option>Football</option><option>Basketball</option><option>Tennis</option><option>Handball</option><option>Autre</option></select>
       </div>
-      <div class="fg"><label>Message (optionnel)</label><textarea placeholder="Parlez-nous de votre club, vos besoins..."></textarea></div>
-      <button class="fs">Envoyer ma demande</button>
-    </div>
+      <div class="fg"><label>Message (optionnel)</label><textarea name="message" placeholder="Parlez-nous de votre club, vos besoins..."></textarea></div>
+      <input type="hidden" name="_subject" value="Nouvelle demande SportFlow">
+      <button type="submit" class="fs">Envoyer ma demande</button>
+    </form>
     <div class="ci rv">
       <div class="ci-title">On vous repond<br>sous 24 heures.</div>
       <div class="ci-item">
