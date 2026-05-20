@@ -279,6 +279,39 @@ footer p{color:var(--mu);font-size:11px;letter-spacing:0.3px;}
   .pq,.ab,.cg{grid-template-columns:1fr;gap:40px;}.pq-right{position:static;}
   footer{flex-direction:column;gap:14px;text-align:center;}
 }
+
+/* COUNTER */
+.counter-card{background:rgba(0,0,0,0.15);padding:40px 32px;text-align:center;}
+.counter-num{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;color:#fff;line-height:1;}
+.counter-label{font-size:12px;color:rgba(255,255,255,0.6);margin-top:8px;font-weight:300;}
+
+/* AUDIT ITEMS */
+.audit-item{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;background:var(--g2);border-left:2px solid transparent;transition:border-color 0.2s;margin-bottom:1px;}
+.audit-item:hover{border-left-color:var(--o);}
+.audit-ico{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--o);flex-shrink:0;margin-top:2px;}
+.audit-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;}
+.audit-desc{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;font-weight:300;}
+
+/* AUDIT FORM */
+.af-input{width:100%;background:var(--g2);border:1px solid var(--br);color:var(--wh);padding:12px 14px;font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;}
+.af-input:focus{border-color:var(--o);}
+.af-input::placeholder{color:rgba(255,255,255,0.25);}
+.af-label{display:block;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:7px;}
+.af-group{margin-bottom:14px;}
+.af-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.af-btn{width:100%;background:var(--o);color:var(--wh);border:none;padding:14px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background 0.2s;}
+.af-btn:hover{background:var(--o2);}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:1px;}
+.faq-item{background:var(--g1);overflow:hidden;}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px;cursor:pointer;transition:background 0.2s;}
+.faq-q:hover{background:var(--g2);}
+.faq-q span{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.faq-arr{width:28px;height:28px;border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--o);flex-shrink:0;transition:transform 0.3s;line-height:1;}
+.faq-item.open .faq-arr{transform:rotate(45deg);}
+.faq-a{display:none;padding:16px 24px 20px;font-size:14px;color:rgba(255,255,255,0.45);line-height:1.75;font-weight:300;border-top:1px solid var(--br);}
+.faq-item.open .faq-a{display:block;}
 </style>
 </head>
 <body>
@@ -432,6 +465,85 @@ footer p{color:var(--mu);font-size:11px;letter-spacing:0.3px;}
   </div>
 </section>
 
+
+<!-- COMPTEUR STATS -->
+<section id="stats" style="background:var(--o);padding:72px 48px;">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(0,0,0,0.15);">
+    <div class="counter-card"><div class="counter-num" id="c1">0</div><div class="counter-label">Clubs amateurs en France</div></div>
+    <div class="counter-card"><div class="counter-num" id="c2">0</div><div class="counter-label">% sans strategie digitale</div></div>
+    <div class="counter-card"><div class="counter-num" id="c3">0</div><div class="counter-label">Heures pour demarrer</div></div>
+    <div class="counter-card"><div class="counter-num" id="c4">0</div><div class="counter-label">Licences = investissement rembourse</div></div>
+  </div>
+</section>
+
+<!-- AUDIT GRATUIT -->
+<section id="audit" style="background:var(--g1);padding:112px 48px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+    <div>
+      <div class="sl rv">Audit gratuit</div>
+      <h2 class="sh rv">Votre club<br>sous la loupe.</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,0.4);line-height:1.8;font-weight:300;margin-bottom:32px;" class="rv">En 48 heures, on analyse votre presence digitale complete et on vous remet un rapport detaille. Gratuit. Sans engagement.</p>
+      <div class="rv">
+        <div class="audit-item"><div class="audit-ico">01</div><div><div class="audit-title">Analyse reseaux sociaux</div><div class="audit-desc">Instagram, Facebook, TikTok — abonnes, engagement, frequence, qualite</div></div></div>
+        <div class="audit-item"><div class="audit-ico">02</div><div><div class="audit-title">Diagnostic de contenu</div><div class="audit-desc">Visuels, legendes, hashtags — ce qui fonctionne et ce qui freine</div></div></div>
+        <div class="audit-item"><div class="audit-ico">03</div><div><div class="audit-title">Recommandations personnalisees</div><div class="audit-desc">3 actions concretes a mettre en place immediatement</div></div></div>
+        <div class="audit-item"><div class="audit-ico">04</div><div><div class="audit-title">Exemple de post refait</div><div class="audit-desc">On recree un de vos posts en version pro pour vous montrer la difference</div></div></div>
+      </div>
+    </div>
+    <div class="rv">
+      <div style="background:var(--bk);border:1px solid var(--br);padding:40px;position:relative;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--o),transparent);"></div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;">Demander l'audit gratuit</div>
+        <div style="font-size:13px;color:var(--mu);margin-bottom:28px;font-weight:300;">Reponse sous 48h — aucun engagement</div>
+        <form action="https://formspree.io/f/xvzlybew" method="POST">
+          <input type="hidden" name="_subject" value="Demande audit gratuit SportFlow">
+          <div class="af-group"><label class="af-label">Prenom et nom du club</label><input type="text" name="nom_club" placeholder="Jean — FC Exemple" required class="af-input"></div>
+          <div class="af-group"><label class="af-label">Email</label><input type="email" name="_replyto" placeholder="contact@monclub.fr" required class="af-input"></div>
+          <div class="af-row">
+            <div><label class="af-label">Sport</label><select name="sport" class="af-input"><option>Football</option><option>Basketball</option><option>Tennis</option><option>Handball</option><option>Autre</option></select></div>
+            <div><label class="af-label">Reseau principal</label><select name="reseau" class="af-input"><option>Instagram</option><option>Facebook</option><option>Les deux</option><option>Aucun</option></select></div>
+          </div>
+          <button type="submit" class="af-btn">Recevoir mon audit gratuit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--bk);padding:112px 48px;">
+  <div style="max-width:720px;margin:0 auto;">
+    <div class="sl rv" style="justify-content:center;">Questions frequentes</div>
+    <h2 class="sh rv" style="text-align:center;margin-bottom:48px;">Tout ce que vous<br>voulez savoir.</h2>
+    <div class="faq-list rv">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Combien de temps ca prend de notre cote ?</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">Presque rien. Vous nous envoyez les photos des matchs par WhatsApp — 2 minutes par semaine maximum. On s'occupe de tout le reste : visuels, legendes, publication, hashtags.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>C'est vraiment sans engagement ?</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">Oui. Pas de contrat long terme, pas de preavis. Vous pouvez arreter a tout moment. On prefere vous convaincre par les resultats chaque mois plutot que par un contrat.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>On a deja un benevole qui s'en occupe.</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">C'est bien — et si cette personne n'est plus disponible demain, qu'est-ce qui se passe ? Nous on est la chaque semaine, quoi qu'il arrive. On peut aussi travailler en complement du benevole pour les evenements importants.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Comment vous rentabilisez 199€/mois ?</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">2 nouvelles licences dans la saison suffisent a rembourser l'integralite du service. Une meilleure visibilite = plus de parents qui trouvent votre club = plus d'inscriptions.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Vous etes etudiants — peut-on vous faire confiance ?</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">C'est exactement pourquoi on offre le premier mois et l'audit gratuit. On ne vous demande pas de nous faire confiance les yeux fermes — on vous montre ce qu'on vaut avant de vous demander quoi que ce soit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Quels sports couvrez-vous ?</span><div class="faq-arr">+</div></div>
+        <div class="faq-a">Football, basketball, tennis, handball et tous les sports collectifs amateurs. On est specialises sport amateur uniquement — on connait vos besoins mieux que n'importe quelle agence generaliste.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="sl">Passez à l'action</div>
   <h2 class="sh">Parlons de<br>votre club.</h2>
@@ -500,6 +612,37 @@ window.addEventListener('scroll',()=>{
   secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
   lks.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--wh)':'';}); 
 });
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  document.querySelectorAll('.faq-item.open').forEach(i => { if(i !== item) i.classList.remove('open'); });
+  item.classList.toggle('open');
+}
+
+function animateCounter(el, target, suffix) {
+  let start = 0;
+  const step = target / 80;
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = (target >= 1000 ? Math.floor(start).toLocaleString('fr') : Math.floor(start)) + suffix;
+    if (start >= target) clearInterval(timer);
+  }, 20);
+}
+
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(document.getElementById('c1'), 180000, '+');
+      animateCounter(document.getElementById('c2'), 70, '%');
+      animateCounter(document.getElementById('c3'), 48, 'h');
+      animateCounter(document.getElementById('c4'), 2, '');
+      counterObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.3});
+const st = document.getElementById('stats');
+if (st) counterObs.observe(st);
+
 </script>
 </body>
 </html>
