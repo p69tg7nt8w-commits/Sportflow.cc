@@ -44,9 +44,8 @@ body::after {
   background-repeat: repeat;
   background-size: 200px;
   pointer-events: none;
-  z-index: 9998;
-  opacity: 0.55;
-  mix-blend-mode: overlay;
+  z-index: 9997;
+  opacity: 0.06;
 }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -868,19 +867,21 @@ footer p { color:var(--mu); font-size:11px; letter-spacing:0.05em; }
 .flinks a:hover { color:var(--o); }
 
 /* ── REVEAL ANIMATIONS ────────────────────── */
-.rv {
-  opacity:0; transform:translateY(28px);
-  transition: opacity 0.7s cubic-bezier(.2,.8,.2,1),
-              transform 0.7s cubic-bezier(.2,.8,.2,1);
-}
+.rv { opacity: 1; transform: none; transition: opacity 0.7s cubic-bezier(.2,.8,.2,1), transform 0.7s cubic-bezier(.2,.8,.2,1); }
+/* L'animation de révélation ne s'active QUE si le JS a confirmé être prêt.
+   Sans JS (ou si erreur), tout le contenu reste visible. */
+html.js-reveal .rv { opacity: 0; transform: translateY(28px); }
+html.js-reveal 
+html.js-reveal 
+html.js-reveal 
 .rv.on { opacity:1; transform:translateY(0); }
 .rv.d1 { transition-delay:0.1s; }
 .rv.d2 { transition-delay:0.2s; }
 .rv.d3 { transition-delay:0.3s; }
 .rv.from-left { transform: translateX(-32px); }
-.rv.from-left.on { transform: translateX(0); }
+
 .rv.from-right { transform: translateX(32px); }
-.rv.from-right.on { transform: translateX(0); }
+
 
 /* ── HAMBURGER MOBILE ─────────────────────── */
 .hamburger {
@@ -1054,7 +1055,7 @@ footer p { color:var(--mu); font-size:11px; letter-spacing:0.05em; }
   100% { opacity: 1; transform: scale(1); }
 }
 @keyframes introFade {
-  to { opacity: 0; visibility: hidden; }
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 /* Respecte les préférences d'accessibilité : pas d'anim si réduit */
 @media (prefers-reduced-motion: reduce) {
@@ -1062,6 +1063,17 @@ footer p { color:var(--mu); font-size:11px; letter-spacing:0.05em; }
   .racket, .ball, .streak, .impact { display: none; }
   .intro-logo { animation: none; opacity: 1; transform: none; }
 }
+
+/* Hero items : visibles immédiatement (pas de reveal scroll) */
+.hero .rv {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.hero .rv.d1 { transition-delay: 0.1s; }
+.hero .rv.d2 { transition-delay: 0.2s; }
+.hero .rv.d3 { transition-delay: 0.3s; }
+
 </style>
 </head>
 <body>
@@ -1385,13 +1397,18 @@ footer p { color:var(--mu); font-size:11px; letter-spacing:0.05em; }
 (function () {
   const intro = document.getElementById('intro');
   if (!intro) return;
-  function remove() { intro.classList.add('done'); document.body.style.overflow = ''; }
+  function remove() { intro.style.display = 'none'; intro.classList.add('done'); document.body.style.overflow = ''; }
   document.body.style.overflow = 'hidden';            // bloque le scroll pendant l'intro
   setTimeout(remove, 3100);                            // filet de sécurité
   intro.addEventListener('animationend', e => { if (e.animationName === 'introFade') remove(); });
   intro.addEventListener('click', remove);             // skip au clic / tap
   window.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Enter') remove(); });
 })();
+
+// Sécurité : restaure le scroll quoi qu'il arrive (overflow restore safety)
+setTimeout(function(){ document.body.style.overflow = ''; 
+  var i = document.getElementById('intro'); 
+  if (i) { i.style.display = 'none'; } }, 3500);
 
 
 const obs = new IntersectionObserver(entries => {
@@ -1496,8 +1513,12 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) setTimeout(() => e.target.classList.add('on'), i * 60);
   });
-}, { threshold: 0.08 });
+}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+document.documentElement.classList.add('js-reveal');
 document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+// Fallback: force tout visible après 1.2s
+setTimeout(() => { document.querySelectorAll('.rv').forEach(el => el.classList.add('on')); }, 1500);
 
 // Active nav
 const secs = document.querySelectorAll('section[id]');
