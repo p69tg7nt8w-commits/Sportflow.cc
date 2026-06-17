@@ -340,6 +340,50 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   .ticker-track{animation:none}
   *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
 }
+#process{padding:100px 40px;max-width:1280px;margin:0 auto}
+.process-inner{max-width:900px;margin:0 auto}
+.process-steps{display:flex;flex-direction:column;gap:2px;margin-top:60px}
+.process-step{display:flex;align-items:flex-start;gap:40px;padding:40px;background:var(--g2);border:1px solid var(--br);border-left:3px solid var(--o);position:relative;transition:background 0.25s}
+.process-step:hover{background:var(--g3)}
+.process-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:80px;line-height:1;color:var(--o);opacity:0.25;min-width:100px;transition:opacity 0.3s}
+.process-step:hover .process-num{opacity:0.6}
+.process-content h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;color:var(--wh)}
+.process-content p{font-size:15px;color:rgba(247,243,238,0.6);line-height:1.7;max-width:520px}
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;gap:40px;padding:100px 24px 60px;text-align:center}
+  .hero-ctas{justify-content:center}
+  .hero-stats{justify-content:center}
+  .services-grid{grid-template-columns:1fr}
+  .offres-grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+  .pourquoi-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .audit-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  #hamburger{display:flex}
+  .process-step{flex-direction:column;gap:16px}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:clamp(52px,14vw,80px)}
+  #services{padding:60px 20px}
+  #offres{padding:60px 20px}
+  #pourquoi{padding:60px 20px}
+  #about{padding:60px 20px}
+  #stats{padding:60px 20px}
+  #audit{padding:60px 20px}
+  #faq{padding:60px 20px}
+  #contact{padding:60px 20px}
+  .btn-p,.btn-g,.nav-cta{min-height:48px;display:inline-flex;align-items:center;justify-content:center}
+  .oc{padding:28px 20px}
+  .sc{padding:24px 20px}
+  .faq-q{font-size:14px;padding:16px}
+  .team-grid{grid-template-columns:1fr}
+  #process{padding:60px 20px}
+  .process-step{flex-direction:column;gap:12px;padding:24px 20px}
+  .process-num{font-size:56px;min-width:auto}
+}
 </style>
 </head>
 <body>
@@ -646,6 +690,37 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   </div>
 </section>
 
+<!-- ===== COMMENT ÇA MARCHE ===== -->
+<section id="process">
+  <div class="process-inner">
+    <div class="section-label rv">COMMENT ÇA MARCHE</div>
+    <h2 class="section-h2 rv">Simple. Rapide. Efficace.</h2>
+    <div class="process-steps">
+      <div class="process-step rv">
+        <div class="process-num">01</div>
+        <div class="process-content">
+          <h3>Audit gratuit</h3>
+          <p>On analyse votre présence digitale en 48h et on vous dit exactement ce qui manque.</p>
+        </div>
+      </div>
+      <div class="process-step rv">
+        <div class="process-num">02</div>
+        <div class="process-content">
+          <h3>On installe tout</h3>
+          <p>Réseaux sociaux, visuels, planning éditorial : tout est opérationnel en quelques jours.</p>
+        </div>
+      </div>
+      <div class="process-step rv">
+        <div class="process-num">03</div>
+        <div class="process-content">
+          <h3>Vous recevez vos posts</h3>
+          <p>Chaque semaine, sans rien faire de votre côté. Vous validez, on publie.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== ABOUT / EQUIPE ===== -->
 <section id="about">
   <div class="about-inner">
@@ -933,7 +1008,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
     </div>
     <p class="footer-copy">2025 SportFlow &mdash; Accelerated Vision. Tous droits r&eacute;serv&eacute;s.</p>
     <nav class="footer-links" aria-label="Liens l&eacute;gaux">
-      <a href="#">Mentions l&eacute;gales</a>
+      <a href="#mentions-legales">Mentions légales</a>
       <a href="#">CGV</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -1261,5 +1336,16 @@ window.closeMobile = closeMobile;
   });
 })();
 </script>
+<section id="mentions-legales" style="background:var(--bk2);padding:80px 40px;border-top:1px solid var(--br)">
+  <div style="max-width:800px;margin:0 auto">
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:32px;color:var(--wh)">Mentions Légales</h2>
+    <div style="display:flex;flex-direction:column;gap:24px;font-size:14px;color:rgba(247,243,238,0.65);line-height:1.8">
+      <div><strong style="color:var(--wh);display:block;margin-bottom:4px">Éditeur du site</strong>SportFlow — Micro-entreprise<br>SIREN : 105535470<br>TVA intracommunautaire : FR43105535470<br>29 Chemin de Caumont, 76490 Rives-en-Seine<br>Contact : <a href="mailto:sportflowcc@gmail.com" style="color:var(--o)">sportflowcc@gmail.com</a></div>
+      <div><strong style="color:var(--wh);display:block;margin-bottom:4px">Hébergeur</strong>GitHub Pages — GitHub Inc.<br>88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA<br><a href="https://pages.github.com" style="color:var(--o)">pages.github.com</a></div>
+      <div><strong style="color:var(--wh);display:block;margin-bottom:4px">Propriété intellectuelle</strong>L'ensemble du contenu de ce site (textes, visuels, code) est la propriété exclusive de SportFlow. Toute reproduction sans autorisation est interdite.</div>
+      <div><strong style="color:var(--wh);display:block;margin-bottom:4px">Données personnelles</strong>Les données collectées via les formulaires de contact sont utilisées uniquement pour répondre à vos demandes et ne sont jamais cédées à des tiers.</div>
+    </div>
+  </div>
+</section>
 </body>
 </html>
