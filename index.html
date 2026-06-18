@@ -121,14 +121,18 @@ html.js-reveal .rv.on{opacity:1;transform:none}
 .badge-float{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:100px;padding:8px 14px;font-size:12px;color:#22c55e;font-weight:500}
 .badge-float::before{content:'';width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-#stadium-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9995;pointer-events:none;transform-origin:center center;will-change:transform,filter;animation:stadiumIntro 4s cubic-bezier(.25,.46,.45,.94) forwards}
 @keyframes stadiumIntro{
   0%{transform:scale(1.4) rotate(-4deg);filter:brightness(0.3)}
   60%{transform:scale(1.15) rotate(2deg);filter:brightness(0.6)}
   100%{transform:scale(1) rotate(0deg);filter:brightness(1)}
 }
-#stadium-video.done{animation:none}
-#stadium-overlay{position:fixed;inset:0;z-index:9996;pointer-events:none;background:linear-gradient(180deg,rgba(6,5,4,0.55) 0%,rgba(6,5,4,0.35) 40%,rgba(6,5,4,0.7) 75%,rgba(6,5,4,0.97) 100%)}
+/* ===== VIDEO BACKGROUNDS ===== */
+.bg-vid{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9995;pointer-events:none;transform-origin:center center;opacity:0;transition:opacity 1.4s ease;will-change:opacity}
+.bg-vid.active{opacity:1}
+.bg-vid.intro-anim{animation:stadiumIntro 4s cubic-bezier(.25,.46,.45,.94) forwards}
+#vid-tennis{object-position:center center}
+#stadium-overlay{position:fixed;inset:0;z-index:9996;pointer-events:none;background:rgba(6,5,4,0.6)}
+@media(prefers-reduced-motion:reduce){.bg-vid{display:none}}
 #intro{position:fixed;inset:0;background:transparent;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 #intro-bg{position:absolute;inset:0;background:rgba(6,5,4,0.45);z-index:0}
 .hero-bg{position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse 60% 60% at 50% 40%,rgba(232,66,10,0.07) 0%,transparent 70%)}
@@ -395,9 +399,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 <!-- Mouse trail -->
 <canvas id="trail-canvas"></canvas>
 <!-- Grain + hero bg -->
-<video id="stadium-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" poster="stadium-poster.jpg">
-  <source src="stadium.mp4" type="video/mp4">
-</video>
+<video id="vid-football" class="bg-vid active intro-anim" autoplay muted loop playsinline preload="auto" aria-hidden="true" poster="stadium-poster.jpg"><source src="stadium.mp4" type="video/mp4"></video>
+<video id="vid-basket" class="bg-vid" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="basket.mp4" type="video/mp4"></video>
+<video id="vid-tennis" class="bg-vid" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="tennis.mp4" type="video/mp4"></video>
 <div id="stadium-overlay"></div>
 <div class="grain"></div>
 <div class="hero-bg"></div>
@@ -1029,12 +1033,9 @@ function skipIntro(){
     document.body.style.overflow='';
     setTimeout(function(){
       if(intro){ intro.style.display='none'; }
-      if(stadiumVideo){
-        stadiumVideo.classList.add('done');
-        stadiumVideo.style.zIndex='-2';
-        stadiumVideo.style.transform='';
-        stadiumVideo.style.filter='';
-      }
+      Object.values(bgVids).forEach(function(v){
+        if(v){ v.classList.remove('intro-anim'); v.style.zIndex='-2'; }
+      });
       var ov = document.getElementById('stadium-overlay');
       if(ov) ov.style.zIndex='-1';
       introOver = true;
@@ -1055,7 +1056,7 @@ if(intro){
       introSkipped = true;
       if(intro){ intro.style.display='none'; }
       document.body.style.overflow='';
-      if(stadiumVideo){ stadiumVideo.classList.add('done'); stadiumVideo.style.zIndex='-2'; }
+      Object.values(bgVids).forEach(function(v){ if(v){ v.style.zIndex='-2'; } });
       var ov = document.getElementById('stadium-overlay');
       if(ov) ov.style.zIndex='-1';
       introOver = true;
@@ -1113,21 +1114,55 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   tick();
 })();
 
-// ===== 3. SCROLL PROGRESS =====
-var scrollBar = document.getElementById('scroll-bar');
-var stadiumVideo = document.getElementById('stadium-video');
+// ===== VIDEO BACKGROUNDS =====
+var bgVids = {
+  football: document.getElementById('vid-football'),
+  basket: document.getElementById('vid-basket'),
+  tennis: document.getElementById('vid-tennis')
+};
+var activeVid = 'football';
 
+function switchBg(name){
+  if(name === activeVid) return;
+  if(bgVids[activeVid]) bgVids[activeVid].classList.remove('active');
+  activeVid = name;
+  if(bgVids[activeVid]) bgVids[activeVid].classList.add('active');
+}
+
+// Section → video mapping
+var secVidMap = [
+  {id:'offres', vid:'basket'},
+  {id:'pourquoi', vid:'tennis'},
+  {id:'about', vid:'tennis'},
+  {id:'stats', vid:'football'},
+  {id:'contact', vid:'football'}
+];
+
+function updateBgByScroll(){
+  var sy = window.scrollY;
+  var wh = window.innerHeight;
+  var chosen = 'football';
+  for(var i=secVidMap.length-1; i>=0; i--){
+    var el = document.getElementById(secVidMap[i].id);
+    if(el && sy + wh*0.5 >= el.offsetTop){
+      chosen = secVidMap[i].vid;
+      break;
+    }
+  }
+  switchBg(chosen);
+}
+
+// ===== SCROLL PROGRESS =====
+var scrollBar = document.getElementById('scroll-bar');
 function updateScroll(){
   var dh = document.documentElement.scrollHeight - window.innerHeight;
   var sy = window.scrollY;
-  if(dh>0 && scrollBar){scrollBar.style.width=(sy/dh*100)+'%';}
-  if(stadiumVideo){
-    var progress = Math.min(sy / (window.innerHeight * 0.8), 1);
-    var scale = 1 + progress * 0.08;
-    var rotate = progress * 3;
-    var brightness = 1 - progress * 0.5;
-    stadiumVideo.style.transform = 'scale('+scale+') rotate('+rotate+'deg)';
-    stadiumVideo.style.filter = 'brightness('+brightness+')';
+  if(dh>0 && scrollBar) scrollBar.style.width=(sy/dh*100)+'%';
+  updateBgByScroll();
+  // Subtle zoom on football video only
+  if(bgVids.football && activeVid==='football'){
+    var progress = Math.min(sy/(window.innerHeight*0.8),1);
+    bgVids.football.style.transform='scale('+(1+progress*0.05)+') rotate('+(progress*1.5)+'deg)';
   }
 }
 window.addEventListener('scroll',updateScroll,{passive:true});
