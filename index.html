@@ -1116,13 +1116,7 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 // ===== 3. SCROLL PROGRESS =====
 var scrollBar = document.getElementById('scroll-bar');
 var stadiumVideo = document.getElementById('stadium-video');
-if(stadiumVideo){
-    });
-  }
-}
-if(stadiumVideo){
-  stadiumVideo.muted=true;
-}
+
 function updateScroll(){
   var dh = document.documentElement.scrollHeight - window.innerHeight;
   var sy = window.scrollY;
