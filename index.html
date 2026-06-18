@@ -122,7 +122,6 @@ html.js-reveal .rv.on{opacity:1;transform:none}
 .badge-float::before{content:'';width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 #stadium-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9995;pointer-events:none;transform-origin:center center;will-change:transform,filter;animation:stadiumIntro 4s cubic-bezier(.25,.46,.45,.94) forwards}
-#stadium-video::-webkit-media-controls,#stadium-video::-webkit-media-controls-panel,#stadium-video::-webkit-media-controls-start-playback-button,#stadium-video::-webkit-media-controls-overlay-play-button{display:none!important;opacity:0!important;-webkit-appearance:none}
 @keyframes stadiumIntro{
   0%{transform:scale(1.4) rotate(-4deg);filter:brightness(0.3)}
   60%{transform:scale(1.15) rotate(2deg);filter:brightness(0.6)}
@@ -396,11 +395,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 <!-- Mouse trail -->
 <canvas id="trail-canvas"></canvas>
 <!-- Grain + hero bg -->
-<video id="stadium-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
+<video id="stadium-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
   <source src="stadium.mp4" type="video/mp4">
 </video>
 <div id="stadium-overlay"></div>
-<div id="video-block" style="position:fixed;inset:0;z-index:9994;pointer-events:none;background:transparent"></div>
 <div class="grain"></div>
 <div class="hero-bg"></div>
 
@@ -1120,8 +1118,6 @@ var scrollBar = document.getElementById('scroll-bar');
 var stadiumVideo = document.getElementById('stadium-video');
 if(stadiumVideo){
   stadiumVideo.muted=true;
-  var vp=stadiumVideo.play();
-  if(vp!==undefined){vp.catch(function(){stadiumVideo.muted=true;stadiumVideo.play()});}
 }
 function updateScroll(){
   var dh = document.documentElement.scrollHeight - window.innerHeight;
