@@ -121,7 +121,8 @@ html.js-reveal .rv.on{opacity:1;transform:none}
 .badge-float{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:100px;padding:8px 14px;font-size:12px;color:#22c55e;font-weight:500}
 .badge-float::before{content:'';width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-#stadium-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9995;pointer-events:none;transform-origin:center center;will-change:transform,filter;animation:stadiumIntro 4s cubic-bezier(.25,.46,.45,.94) forwards}
+#stadium-video{display:none}
+#stadium-canvas{animation:stadiumIntro 4s cubic-bezier(.25,.46,.45,.94) forwards}
 #stadium-video::-webkit-media-controls,#stadium-video::-webkit-media-controls-panel,#stadium-video::-webkit-media-controls-start-playback-button,#stadium-video::-webkit-media-controls-overlay-play-button{display:none!important;opacity:0!important;-webkit-appearance:none}
 @keyframes stadiumIntro{
   0%{transform:scale(1.4) rotate(-4deg);filter:brightness(0.3)}
@@ -396,11 +397,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 <!-- Mouse trail -->
 <canvas id="trail-canvas"></canvas>
 <!-- Grain + hero bg -->
-<video id="stadium-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
+<video id="stadium-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline style="display:none">
   <source src="stadium.mp4" type="video/mp4">
 </video>
 <div id="stadium-overlay"></div>
-<div id="video-block" style="position:fixed;inset:0;z-index:9994;pointer-events:none;background:transparent"></div>
+<canvas id="stadium-canvas" style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9995;pointer-events:none;transform-origin:center center;will-change:transform,filter"></canvas>
 <div class="grain"></div>
 <div class="hero-bg"></div>
 
@@ -1032,10 +1033,10 @@ function skipIntro(){
     setTimeout(function(){
       if(intro){ intro.style.display='none'; }
       if(stadiumVideo){
-        stadiumVideo.classList.add('done');
-        stadiumVideo.style.zIndex='-2';
-        stadiumVideo.style.transform='';
-        stadiumVideo.style.filter='';
+        stadiumCanvas && stadiumCanvas.classList.add('done');
+        if(stadiumCanvas) stadiumCanvas.style.zIndex='-2';
+        if(stadiumCanvas) stadiumCanvas.style.transform='';
+        if(stadiumCanvas) stadiumCanvas.style.filter='';
       }
       var ov = document.getElementById('stadium-overlay');
       if(ov) ov.style.zIndex='-1';
@@ -1057,7 +1058,7 @@ if(intro){
       introSkipped = true;
       if(intro){ intro.style.display='none'; }
       document.body.style.overflow='';
-      if(stadiumVideo){ stadiumVideo.classList.add('done'); stadiumVideo.style.zIndex='-2'; }
+      if(stadiumVideo){ stadiumCanvas && stadiumCanvas.classList.add('done'); if(stadiumCanvas) stadiumCanvas.style.zIndex='-2'; }
       var ov = document.getElementById('stadium-overlay');
       if(ov) ov.style.zIndex='-1';
       introOver = true;
@@ -1118,6 +1119,13 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 // ===== 3. SCROLL PROGRESS =====
 var scrollBar = document.getElementById('scroll-bar');
 var stadiumVideo = document.getElementById('stadium-video');
+var stadiumCanvas = document.getElementById('stadium-canvas');
+var sCtx = stadiumCanvas ? stadiumCanvas.getContext('2d') : null;
+function resizeCanvas(){ if(stadiumCanvas){ stadiumCanvas.width=window.innerWidth; stadiumCanvas.height=window.innerHeight; } }
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+function drawVideoFrame(){ if(sCtx && stadiumVideo && !stadiumVideo.paused){ sCtx.drawImage(stadiumVideo,0,0,stadiumCanvas.width,stadiumCanvas.height); } requestAnimationFrame(drawVideoFrame); }
+drawVideoFrame();
 if(stadiumVideo){
   stadiumVideo.muted=true;
   var vp=stadiumVideo.play();
@@ -1132,8 +1140,8 @@ function updateScroll(){
     var scale = 1 + progress * 0.08;
     var rotate = progress * 3;
     var brightness = 1 - progress * 0.5;
-    stadiumVideo.style.transform = 'scale('+scale+') rotate('+rotate+'deg)';
-    stadiumVideo.style.filter = 'brightness('+brightness+')';
+    stadiumCanvas && (stadiumCanvas.style.transform = 'scale('+scale+') rotate('+rotate+'deg)';
+    if(stadiumCanvas) stadiumCanvas.style.filter = 'brightness('+brightness+')';
   }
 }
 window.addEventListener('scroll',updateScroll,{passive:true});
