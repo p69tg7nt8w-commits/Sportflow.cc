@@ -396,7 +396,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 <!-- Mouse trail -->
 <canvas id="trail-canvas"></canvas>
 <!-- Grain + hero bg -->
-<video id="stadium-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
+<video id="stadium-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
   <source src="stadium.mp4" type="video/mp4">
 </video>
 <div id="stadium-overlay"></div>
@@ -1118,6 +1118,11 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 // ===== 3. SCROLL PROGRESS =====
 var scrollBar = document.getElementById('scroll-bar');
 var stadiumVideo = document.getElementById('stadium-video');
+if(stadiumVideo){
+  stadiumVideo.muted=true;
+  var vp=stadiumVideo.play();
+  if(vp!==undefined){vp.catch(function(){stadiumVideo.muted=true;stadiumVideo.play()});}
+}
 function updateScroll(){
   var dh = document.documentElement.scrollHeight - window.innerHeight;
   var sy = window.scrollY;
