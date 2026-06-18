@@ -399,7 +399,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
   <source src="stadium.mp4" type="video/mp4">
 </video>
 <div id="stadium-overlay"></div>
-<div id="stadium-fallback" style="position:fixed;inset:0;z-index:9994;background:url(stadium-poster.jpg) center/cover no-repeat;display:none;pointer-events:none"></div>
 <div class="grain"></div>
 <div class="hero-bg"></div>
 
@@ -1117,13 +1116,7 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 // ===== 3. SCROLL PROGRESS =====
 var scrollBar = document.getElementById('scroll-bar');
 var stadiumVideo = document.getElementById('stadium-video');
-var stadiumFallback = document.getElementById('stadium-fallback');
 if(stadiumVideo){
-  var _vp=stadiumVideo.play();
-  if(_vp!==undefined){
-    _vp.catch(function(){
-      stadiumVideo.style.display='none';
-      if(stadiumFallback) stadiumFallback.style.display='block';
     });
   }
 }
