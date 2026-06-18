@@ -206,7 +206,7 @@ html.js-reveal .rv.on{opacity:1;transform:none}
 .about-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center}
 .about-logo-block{aspect-ratio:1;background:var(--g2);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 32px),calc(100% - 32px) 100%,0 100%);position:relative;overflow:hidden}
 .about-logo-block::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--o)}
-.about-logo-block img{width:60%;aspect-ratio:1;border-radius:50%;object-fit:cover}
+.about-logo-block img{width:120px;height:120px;border-radius:50%;object-fit:cover;display:block}
 .about-subtitle{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(22px,2.5vw,32px);color:var(--wh);line-height:1.2;margin-bottom:20px}
 .about-text{font-size:14px;color:var(--mu);line-height:1.8;margin-bottom:16px}
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;margin-bottom:28px}
@@ -396,7 +396,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 <!-- Mouse trail -->
 <canvas id="trail-canvas"></canvas>
 <!-- Grain + hero bg -->
-<video id="stadium-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+<video id="stadium-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
   <source src="stadium.mp4" type="video/mp4">
 </video>
 <div id="stadium-overlay"></div>
