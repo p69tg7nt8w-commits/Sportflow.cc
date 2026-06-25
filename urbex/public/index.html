@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URBEX.AI — Exploration Nocturne</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── INTRO SCREEN ── -->
+  <div id="intro">
+    <div class="scanlines"></div>
+    <div class="intro-content">
+      <div class="signal-bar"></div>
+      <p class="pre-title">▌ CONNEXION ÉTABLIE ▌ BELGIQUE ▌ 02:47 ▌</p>
+      <h1 id="main-title">URBEX.AI</h1>
+      <p class="subtitle">EXPLORATION URBAINE NOCTURNE</p>
+      <div class="divider"></div>
+      <p class="lore-text">
+        Un lieu oublié vous attend.<br/>
+        Aucune carte. Aucun filet de sécurité.<br/>
+        Seulement vous, la nuit, et ce que les murs se souviennent.
+      </p>
+      <button id="start-btn">[ COMMENCER L'EXPLORATION ]</button>
+      <p class="warning">⚠ Éteignez votre téléphone. Marchez doucement.</p>
+    </div>
+  </div>
+
+  <!-- ── GAME SCREEN ── -->
+  <div id="game" class="hidden">
+    <div class="scanlines"></div>
+
+    <header id="game-header">
+      <span class="logo-small">URBEX.AI</span>
+      <span class="status-dot"></span>
+      <span class="status-text">EN COURS D'EXPLORATION</span>
+      <span class="time-display" id="clock"></span>
+    </header>
+
+    <div id="chat-container">
+      <div id="messages"></div>
+      <div id="typing-indicator" class="hidden">
+        <span class="narrator-bar"></span>
+        <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+      </div>
+    </div>
+
+    <div id="options-bar" class="hidden"></div>
+
+    <div id="input-area">
+      <span class="prompt-char">›</span>
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Action personnalisée..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button id="send-btn">ENVOYER</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
