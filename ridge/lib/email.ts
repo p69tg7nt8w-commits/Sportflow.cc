@@ -7,10 +7,10 @@ function accessEmailHtml(courseAccessUrl: string) {
       <p style="text-transform:uppercase;letter-spacing:1px;font-size:12px;font-weight:700;color:#35d6c4;margin:0 0 16px;">
         Ridge · Formation revente hors-piste
       </p>
-      <h1 style="font-size:24px;margin:0 0 16px;color:#f5f6f8;">Merci pour ton achat 🎿</h1>
+      <h1 style="font-size:24px;margin:0 0 16px;color:#f5f6f8;">Ton accès est prêt 🎿</h1>
       <p style="font-size:15px;line-height:1.6;color:#c7cbd4;margin:0 0 24px;">
-        Ton paiement a bien été reçu. Tu as maintenant un accès complet à la formation :
-        les 4 modules vidéo, les fiches récap et les templates d'annonces.
+        Merci pour ton inscription. Tu as maintenant un accès complet et gratuit à
+        la formation : les 4 modules vidéo, les fiches récap et les templates d'annonces.
       </p>
       <a href="${courseAccessUrl}"
          style="display:inline-block;background:#f5f6f8;color:#0a0c10;text-decoration:none;
