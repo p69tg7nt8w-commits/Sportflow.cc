@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ridge — Formation revente skis hors-piste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0C10; --bg-2:#101319; --panel:#161A22; --white:#F5F6F8; --muted:#8B93A3;
+    --violet:#7B5CFA; --teal:#35D6C4; --fluor:#FF5A1F; --line: rgba(245,246,248,0.09);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg); color:var(--white); font-family:'Inter', sans-serif; overflow-x:hidden; }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; font-weight:700; letter-spacing:-0.5px; }
+  button{font-family:inherit;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+  nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+    padding:20px clamp(20px,5vw,64px); background:rgba(10,12,16,0.75); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .logo{ font-family:'Space Grotesk'; font-weight:800; font-size:20px; letter-spacing:1px; }
+  .logo span{ color:var(--teal); }
+  .navlinks{ display:flex; gap:32px; font-size:14px; font-weight:600; color:var(--muted); }
+  .navlinks a{ text-decoration:none; color:var(--muted); transition:color .2s; }
+  .navlinks a:hover{ color:var(--white); }
+  .nav-cta{ display:inline-block; background:var(--white); color:var(--bg); border:none; padding:12px 22px; border-radius:100px;
+    font-weight:700; font-size:14px; text-decoration:none; cursor:pointer; transition:transform .2s ease; }
+  .nav-cta:hover{ transform:translateY(-2px); }
+  @media(max-width:800px){ .navlinks{ display:none; } }
+
+  .hero{ position:relative; padding:80px clamp(20px,5vw,64px) 60px; overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; z-index:0;
+    background: radial-gradient(circle at 15% 20%, rgba(123,92,250,0.25), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(53,214,196,0.18), transparent 45%); }
+  .hero-inner{ position:relative; z-index:1; display:grid; grid-template-columns:1.1fr 0.9fr; gap:50px; align-items:center; }
+  @media(max-width:960px){ .hero-inner{ grid-template-columns:1fr; } }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:22px; }
+  .eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--fluor); }
+  h1.hero-title{ font-size:clamp(42px,5.6vw,72px); line-height:0.98; }
+  h1.hero-title .grad{ background:linear-gradient(90deg, var(--violet), var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-sub{ margin-top:24px; font-size:17px; line-height:1.65; color:var(--muted); max-width:480px; }
+  .hero-ctas{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; align-items:center; }
+  .btn-solid{ display:inline-block; background:var(--white); color:var(--bg); border:none; padding:17px 30px; border-radius:100px;
+    font-weight:700; font-size:15px; text-decoration:none; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease; }
+  .btn-solid:hover{ transform:translateY(-3px); box-shadow:0 14px 30px -10px rgba(245,246,248,0.25); }
+  .btn-outline{ display:inline-block; background:transparent; color:var(--white); border:1.5px solid rgba(245,246,248,0.25); padding:17px 28px;
+    border-radius:100px; font-weight:700; font-size:15px; text-decoration:none; cursor:pointer; transition:border-color .2s ease, transform .2s ease; }
+  .btn-outline:hover{ border-color:var(--white); transform:translateY(-3px); }
+  .hero-stats{ display:flex; gap:34px; margin-top:44px; flex-wrap:wrap; }
+  .hero-stats .stat b{ display:block; font-family:'Space Grotesk'; font-size:26px; }
+  .hero-stats .stat span{ font-size:12px; color:var(--muted); font-weight:600; }
+
+  .ski-stage{ position:relative; height:480px; display:flex; align-items:center; justify-content:center; gap:18px; }
+  .ski{ width:78px; height:430px; border-radius:38px 38px 14px 14px; position:relative; overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6); transition:transform .35s ease; }
+  .ski:hover{ transform:translateY(-14px); }
+  .ski-a{ background:linear-gradient(200deg, #2A1B5E 0%, var(--violet) 45%, var(--teal) 100%); transform:rotate(-6deg); }
+  .ski-b{ background:linear-gradient(180deg, #0E0E10 0%, #1B1C20 60%, var(--white) 100%); transform:rotate(2deg) translateY(20px); }
+  .ski-c{ background:linear-gradient(200deg, var(--fluor) 0%, #C23A0F 100%); transform:rotate(9deg); }
+  .ski-pattern{ position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 10px); }
+  .ski-chevron{ position:absolute; inset:0; background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.18) 0 6px, transparent 6px 18px); mix-blend-mode:overlay; }
+
+  .marquee-wrap{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:16px 0; overflow:hidden; white-space:nowrap; background:var(--bg-2); }
+  .marquee{ display:inline-block; animation:scroll 24s linear infinite; }
+  .marquee span{ font-family:'Space Grotesk'; font-weight:700; font-size:16px; letter-spacing:1px; text-transform:uppercase; margin-right:44px; color:var(--muted); }
+  .marquee span.hi{ color:var(--white); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  section{ padding:100px clamp(20px,5vw,64px); }
+  .section-head{ max-width:640px; margin-bottom:54px; }
+  .kicker{ color:var(--teal); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:14px; display:block; }
+  .section-head h2{ font-size:clamp(30px,3.8vw,46px); }
+  .section-head p{ margin-top:16px; color:var(--muted); font-size:16px; line-height:1.6; }
+
+  .modules-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media(max-width:900px){ .modules-grid{ grid-template-columns:1fr; } }
+  .module-card{ background:var(--panel); border-radius:20px; padding:28px; border:1px solid var(--line); transition:transform .25s ease, border-color .25s ease; }
+  .module-card:hover{ transform:translateY(-6px); border-color:rgba(245,246,248,0.2); }
+  .module-num{ font-family:'Space Grotesk'; font-weight:800; font-size:13px; color:var(--teal); margin-bottom:14px; }
+  .module-card h3{ font-size:17px; margin-bottom:10px; }
+  .module-card p{ font-size:14px; line-height:1.6; color:var(--muted); }
+
+  .process{ background:var(--bg-2); }
+  .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
+  @media(max-width:900px){ .process-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:560px){ .process-grid{ grid-template-columns:1fr; } }
+  .step{ border-top:2px solid var(--teal); padding-top:18px; }
+  .step .num{ font-family:'Space Grotesk'; font-size:32px; font-weight:800; opacity:0.9; display:block; margin-bottom:10px; }
+  .step h3{ font-size:16px; margin-bottom:8px; }
+  .step p{ font-size:13.5px; line-height:1.55; color:var(--muted); }
+
+  .offer{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:50px; align-items:center; }
+  @media(max-width:900px){ .offer{ grid-template-columns:1fr; } }
+  .offer-list{ list-style:none; display:flex; flex-direction:column; gap:14px; margin-top:26px; }
+  .offer-list li{ display:flex; gap:12px; align-items:flex-start; font-size:15px; color:#D8DBE2; }
+  .offer-list li::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--teal); margin-top:8px; flex-shrink:0; }
+  .offer-card{ background:linear-gradient(160deg, var(--panel), #0E1016); border:1px solid var(--line); border-radius:24px; padding:34px; }
+  .offer-card .tag{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--fluor); }
+  .offer-card h3{ font-size:24px; margin:14px 0 18px; }
+  .access-form{ display:flex; flex-direction:column; gap:12px; }
+  .access-input{ background:rgba(245,246,248,0.05); border:1.5px solid var(--line); border-radius:100px; padding:15px 22px;
+    font-size:15px; color:var(--white); font-family:inherit; outline:none; transition:border-color .2s ease; }
+  .access-input::placeholder{ color:var(--muted); }
+  .access-input:focus{ border-color:var(--teal); }
+  .access-sent{ font-size:15px; line-height:1.6; color:var(--teal); font-weight:600; text-align:center; }
+  .offer-card .btn-solid{ width:100%; text-align:center; border:none; }
+  .offer-note{ text-align:center; font-size:12.5px; color:var(--muted); margin-top:14px; }
+
+  .final{ text-align:center; }
+  .final h2{ font-size:clamp(32px,4.2vw,54px); max-width:680px; margin:0 auto; }
+  .final .grad{ background:linear-gradient(90deg, var(--violet), var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .final p{ color:var(--muted); margin-top:18px; font-size:16px; }
+  .final .hero-ctas{ justify-content:center; }
+
+  footer{ border-top:1px solid var(--line); padding:40px clamp(20px,5vw,64px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:13px; color:var(--muted); }
+
+  .preview-banner{ background:var(--fluor); color:#1a0800; text-align:center; font-weight:700; font-size:13px; padding:10px 16px; }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">Aperçu visuel uniquement — le formulaire ne renvoie pas de vrai email ici</div>
+
+<nav>
+  <div class="logo">RIDGE<span>·</span></div>
+  <div class="navlinks">
+    <a href="#modules">Programme</a>
+    <a href="#process">Méthode</a>
+    <a href="#offre">Accès</a>
+  </div>
+  <a href="#offre" class="nav-cta">Rejoindre</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Formation · Revente hors-piste</span>
+      <h1 class="hero-title">Apprends à<br><span class="grad">vendre</span> du matos<br>freeride avec marge.</h1>
+      <p class="hero-sub">Trouver une paire pas chère, c'est la partie facile. La vraie compétence, c'est de savoir la présenter, la pricer, et la vendre vite — sans la brader. C'est exactement ce qu'on t'apprend.</p>
+      <div class="hero-ctas">
+        <a href="#offre" class="btn-solid">Accéder à la formation</a>
+        <a href="#modules" class="btn-outline">Voir le programme</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>4 modules</b><span>Contenu vidéo + fiches</span></div>
+        <div class="stat"><b>Accès immédiat</b><span>Gratuit, par email</span></div>
+      </div>
+    </div>
+    <div class="ski-stage">
+      <div class="ski ski-a"><div class="ski-pattern"></div></div>
+      <div class="ski ski-b"><div class="ski-chevron"></div></div>
+      <div class="ski ski-c"><div class="ski-pattern"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="hi">PRICING</span><span>·</span><span class="hi">PHOTOS</span><span>·</span><span class="hi">ANNONCE</span><span>·</span><span class="hi">NÉGOCIATION</span><span>·</span><span class="hi">CLOSING</span><span>·</span>
+    <span class="hi">PRICING</span><span>·</span><span class="hi">PHOTOS</span><span>·</span><span class="hi">ANNONCE</span><span>·</span><span class="hi">NÉGOCIATION</span><span>·</span><span class="hi">CLOSING</span><span>·</span>
+  </div>
+</div>
+
+<section id="modules">
+  <div class="section-head">
+    <span class="kicker">Le programme</span>
+    <h2>Ce que tu apprends</h2>
+    <p>Quatre modules courts et concrets, centrés sur la vente — pas sur la théorie.</p>
+  </div>
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-num">Module 01</div>
+      <h3>Fixer le bon prix</h3>
+      <p>Comment estimer une paire selon la marque, l'état, la taille et la demande réelle — pour vendre vite sans te sous-payer.</p>
+    </div>
+    <div class="module-card">
+      <div class="module-num">Module 02</div>
+      <h3>Des photos qui vendent</h3>
+      <p>Cadrage, lumière, mise en scène simple : ce qui fait qu'une annonce arrête le scroll au lieu de se noyer dans la masse.</p>
+    </div>
+    <div class="module-card">
+      <div class="module-num">Module 03</div>
+      <h3>Où et comment poster</h3>
+      <p>Leboncoin, Facebook Marketplace, groupes freeride spécialisés : le bon canal selon le type de paire, et comment rédiger l'annonce.</p>
+    </div>
+    <div class="module-card">
+      <div class="module-num">Module 04</div>
+      <h3>Négocier et closer</h3>
+      <p>Répondre aux messages, gérer les baisses de prix, conclure en personne ou à distance sans perdre la vente.</p>
+    </div>
+    <div class="module-card">
+      <div class="module-num">Bonus</div>
+      <h3>Contenu TikTok/Insta</h3>
+      <p>Filmer le déballage, le nettoyage ou l'essai pour construire une audience en même temps que tu vends.</p>
+    </div>
+    <div class="module-card">
+      <div class="module-num">Bonus</div>
+      <h3>Suivi des ventes</h3>
+      <p>Un tableau simple pour suivre marge, temps de vente moyen, et savoir quels modèles tournent le mieux.</p>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="section-head">
+    <span class="kicker">La méthode en un coup d'œil</span>
+    <h2>De l'achat à l'argent sur le compte</h2>
+  </div>
+  <div class="process-grid">
+    <div class="step"><span class="num">01</span><h3>Repérer</h3><p>Identifier une paire au bon prix, au bon état.</p></div>
+    <div class="step"><span class="num">02</span><h3>Préparer</h3><p>Nettoyer, vérifier, photographier.</p></div>
+    <div class="step"><span class="num">03</span><h3>Publier</h3><p>Annonce claire, prix juste, bon canal.</p></div>
+    <div class="step"><span class="num">04</span><h3>Vendre</h3><p>Répondre vite, négocier, conclure.</p></div>
+  </div>
+</section>
+
+<section id="offre">
+  <div class="offer">
+    <div>
+      <span class="kicker">L'accès</span>
+      <h2>Une formation complète, gratuite.</h2>
+      <ul class="offer-list">
+        <li>4 modules vidéo + fiches récap téléchargeables</li>
+        <li>Méthode de pricing appliquée au ski hors-piste récent</li>
+        <li>Templates d'annonces prêts à copier-coller</li>
+        <li>Accès à vie, mises à jour incluses</li>
+      </ul>
+    </div>
+    <div class="offer-card">
+      <span class="tag">Accès complet</span>
+      <h3>Formation Revente Hors-Piste</h3>
+      <form class="access-form" id="access-form">
+        <input type="email" required placeholder="ton@email.com" class="access-input" id="access-email">
+        <button type="submit" class="btn-solid">Accéder maintenant</button>
+      </form>
+      <div class="offer-note">Gratuit · accès immédiat par email</div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <span class="kicker">Prêt à commencer</span>
+  <h2>Ta première vente<br>peut se faire <span class="grad">ce mois-ci</span>.</h2>
+  <p>Programme accessible gratuitement, immédiatement par email.</p>
+  <div class="hero-ctas" style="margin-top:30px; justify-content:center;">
+    <a href="#offre" class="btn-solid">Accéder à la formation</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Ridge — site vitrine, demo</span>
+  <span>Formation revente skis hors-piste</span>
+</footer>
+
+<script>
+  document.getElementById('access-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    this.outerHTML = '<p class="access-sent">C\'est parti ! Vérifie ta boîte mail (et tes spams) pour accéder à la formation.</p>';
+  });
+</script>
+
+</body>
+</html>
