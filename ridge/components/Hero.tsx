@@ -1,5 +1,3 @@
-import CheckoutButton from "./CheckoutButton";
-
 export default function Hero() {
   return (
     <section className="hero">
@@ -21,9 +19,9 @@ export default function Hero() {
             t&apos;apprend.
           </p>
           <div className="hero-ctas">
-            <CheckoutButton className="btn-solid">
+            <a href="#offre" className="btn-solid">
               Accéder à la formation
-            </CheckoutButton>
+            </a>
             <a href="#modules" className="btn-outline">
               Voir le programme
             </a>
@@ -35,7 +33,7 @@ export default function Hero() {
             </div>
             <div className="stat">
               <b>Accès immédiat</b>
-              <span>Après paiement</span>
+              <span>Gratuit, par email</span>
             </div>
           </div>
         </div>
