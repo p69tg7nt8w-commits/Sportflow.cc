@@ -418,13 +418,32 @@
 
   /* ---------- Reviews ---------- */
   .reviews{ background: var(--blue); }
+  .reviews-top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap: 28px;
+    margin-bottom: 44px;
+  }
   .reviews-score{
     display:flex;
     flex-wrap:wrap;
     align-items:baseline;
     gap: 18px;
-    margin-bottom: 44px;
   }
+  .reviews-photo{
+    width: 150px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-m);
+    overflow:hidden;
+    box-shadow: var(--shadow-soft);
+    border: 4px solid var(--cream);
+    flex-shrink:0;
+    transition: transform .3s var(--ease);
+  }
+  .reviews-photo:hover{ transform: rotate(-2deg) scale(1.03); }
+  .reviews-photo img{ width:100%; height:100%; object-fit:cover; }
   .reviews-score .score-num{
     font-family:'Fraunces', serif;
     font-size: clamp(3rem, 8vw, 4.8rem);
@@ -635,7 +654,7 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-media">
-      <img src="/images/baozi-hero.jpg" alt="Baozi vapeur fraîchement préparés chez BaoBaoZi" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph-img',style:'position:absolute;inset:0',textContent:'/images/baozi-hero.jpg'}))">
+      <img src="/images/facade-hero.jpg" alt="La devanture bleu pastel de BaoBaoZi, 14 Rue Thouret à Rouen" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph-img',style:'position:absolute;inset:0',textContent:'/images/facade-hero.jpg'}))">
     </div>
     <div class="container">
       <div class="hero-content">
@@ -654,7 +673,7 @@
   <section class="section story" id="histoire">
     <div class="container story-grid">
       <div class="story-photo">
-        <img src="/images/couple.jpg" alt="Le couple de restaurateurs de BaoBaoZi devant leur devanture à Rouen" onerror="this.parentElement.innerHTML='<div class=&quot;ph-img&quot;>/images/couple.jpg</div>'">
+        <img src="/images/couple.jpg" alt="Le couple de restaurateurs de BaoBaoZi devant leur devanture à Rouen" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;ph-img&quot;>/images/couple.jpg</div>'">
       </div>
       <div class="story-text">
         <span class="eyebrow-tag">Notre histoire</span>
@@ -730,11 +749,16 @@
   <!-- AVIS -->
   <section class="section reviews" id="avis">
     <div class="container">
-      <div class="reviews-score">
-        <span class="score-num">4,8/5</span>
-        <div>
-          <div class="stars" aria-hidden="true">★★★★★</div>
-          <div class="score-meta">386 avis sur Google</div>
+      <div class="reviews-top">
+        <div class="reviews-score">
+          <span class="score-num">4,8/5</span>
+          <div>
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <div class="score-meta">386 avis sur Google</div>
+          </div>
+        </div>
+        <div class="reviews-photo">
+          <img src="/images/baozi-avis.jpg" alt="Assiette de baozi de BaoBaoZi, prêts à déguster" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;ph-img&quot;>/images/baozi-avis.jpg</div>'">
         </div>
       </div>
 
